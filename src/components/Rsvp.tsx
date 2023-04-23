@@ -28,7 +28,7 @@ const people = [
     { id: 1, name: 'Anand Dans', seatNumber: 1, numberOfGuests: 3, code: "123" },
     { id: 2, name: 'Paul Bryan Pabillaran', seatNumber: 10, numberOfGuests: 2, code: "RSf423"},
     { id: 3, name: 'Arjo Antatico', seatNumber: 10, numberOfGuests: 5, code: "RSf5213" },
-    { id: 3, name: 'Thea Amabelle Apale', seatNumber: 10, numberOfGuests: 5, code: "CPA2023" },
+    { id: 4, name: 'Thea Amabelle Apale', seatNumber: 10, numberOfGuests: 5, code: "CPA2023" },
   // More users...
 ];
 
