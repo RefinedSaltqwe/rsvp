@@ -9,7 +9,7 @@ const features = [
     {
       name: 'When',
       description:
-        'August 05, 2023',
+        'August 04, 2023',
       icon: CalendarDaysIcon,
     },
     {
@@ -27,7 +27,7 @@ const features = [
     {
       name: 'Dress code',
       description:
-        'Deserunt corrupti praesentium quo vel cupiditate est occaecati ad. Aperiam libero modi similique iure praesentium facilis quo cumque quibusdam.',
+        'The dress code for our wedding is casual-formal and in shades of blue, except navy/midnight blue. We would highly appreciate it if guests adhere to the dress code. Thank you.',
       icon: CheckCircleIcon,
     },
   ]
@@ -44,15 +44,22 @@ const Details:React.FC<DetailsProps> = () => {
               <dl className="col-span-2 grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2">
                 {features.map((feature) => (
                   <div key={feature.name}>
-                    <dt className="text-base font-semibold leading-7 text-gray-900">
+                    <dt className="text-base font-semibold leading-7 text-gray-900 text-[21px]">
                       <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
                         <feature.icon className="h-6 w-6 text-white" aria-hidden="true" />
                       </div>
                       {feature.name}
                     </dt>
                     <dd className="mt-1 text-base leading-7 text-gray-600">
-                        {feature.name === "Where" ? (<p className='font-semibold'>{feature.description}</p>) : feature.description }
+                        {feature.name === "Where" && (<><br/><p className='font-semibold'>Church: San Antonio de Padua Parish</p></>)}
+                        {feature.name === "Where" && (
+                            <>
+                              {"12th St. Nazareth Cagayan de Oro City"}
+                              <br/>
+                            </>
+                          )}
                         <br/>
+                        {feature.name === "Where" ? (<p className='font-semibold'>{`Reception: ${feature.description}`}</p>) : feature.description }
                         {feature.name === "Where" && "Zone 3 Old Road, Cagayan de Oro, 9000 Misamis Oriental, Philippines"}
                     </dd>
                   </div>

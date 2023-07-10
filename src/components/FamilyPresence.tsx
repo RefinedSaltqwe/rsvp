@@ -16,11 +16,11 @@ const FamilyPresence:React.FC<FamilyPresenceProps> = () => {
         <div className="relative isolate overflow-hidden bg-gray-900">
           <div className="px-6 py-24 sm:px-6 sm:py-32 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
-              <h2 className={`text-4xl font-bold tracking-tight text-white sm:text-4xl ${AB.className}`}>
+              <h2 className={`text-5xl font-bold tracking-tight text-white sm:text-6xl ${AB.className}`}>
                 Your presence is a gift.
               </h2>
-              <p className="mx-auto mt-6 max-w-xl text-4xl leading-10 text-gray-300">
-                Having loving family and friends in our lives is the best gift of all.
+              <p className="mx-auto mt-6 max-w-xl text-xl sm:text-3xl leading-10 text-gray-300">
+                Having our loving family and friends during our special day is the best gift of all.
               </p>
             </div>
           </div>

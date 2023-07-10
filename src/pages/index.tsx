@@ -1,3 +1,5 @@
+import Attention from '@/components/Attention'
+import Ceremony from '@/components/Ceremory'
 import Details from '@/components/Details'
 import FamilyPresence from '@/components/FamilyPresence'
 import HeroSection from '@/components/HeroSection'
@@ -15,6 +17,8 @@ export default function Home() {
       <Rsvp/>
       <FamilyPresence/>
       <Details/>
+      {/* <Attention/> */}
+      <Ceremony/>
       <Reception/>
     </div>
   )

@@ -16,7 +16,7 @@ const RsvpSuccessful:React.FC<RsvpSuccessfulProps> = () => {
         <div className="ml-3">
           <h3 className="text-xl font-medium text-green-800">RSVP Successful</h3>
           <div className="mt-2 text-md text-green-700">
-            <p>Pwede ra nimo ma edit ang everythings.</p>
+            <p>See you on August 04, 2023! Please read the details below.</p>
           </div>
         </div>
       </div>

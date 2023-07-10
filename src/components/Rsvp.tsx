@@ -6,6 +6,7 @@ import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
 import { firestore } from '@/firebase/clientApp';
 import RsvpSuccessful from './RsvpSuccessful';
 import RsvpError from './RsvpError';
+import people from '../data/people';
 
 type RsvpProps = {
     
@@ -20,17 +21,12 @@ interface RSVP {
     name: string;
     seatNumber: number;
     numberOfGuests: number;
+    numberOfActualGuests: number;
     guests?: Guest[];
     answer: "Yes" | "No";
 }
 
-const people = [
-    { id: 1, name: 'Anand Dans', seatNumber: 1, numberOfGuests: 3, code: "123" },
-    { id: 2, name: 'Paul Bryan Pabillaran', seatNumber: 10, numberOfGuests: 2, code: "RSf423"},
-    { id: 3, name: 'Arjo Antatico', seatNumber: 10, numberOfGuests: 5, code: "RSf5213" },
-    { id: 4, name: 'Thea Amabelle Apale', seatNumber: 10, numberOfGuests: 5, code: "CPA2023" },
-  // More users...
-];
+
 
 const Rsvp:React.FC<RsvpProps> = () => {
     
@@ -51,12 +47,16 @@ const Rsvp:React.FC<RsvpProps> = () => {
         if(answer === "Yes"){
             setIsComingAnswer(true);
             setButtonToggle(false);
+            setIsCheckDisabled(true);
+            setCode("");
         } else if(answer === "No") {
             setIsComingAnswer(false);
             setIsCodeMatch(false);
+            setIsSubmitDisbaled(true);
             setIsCheckDisabled(true);
             setButtonToggle(true);
             setError("");
+            setCode("");
             setAddGuest("");
             setGuests([]);
         }
@@ -65,10 +65,15 @@ const Rsvp:React.FC<RsvpProps> = () => {
     const checkCode = () => {
         if(code === selectedPerson?.code){
             setIsCodeMatch(true);
+            setIsSubmitDisbaled(true); // ! false
             setButtonToggle(true)
             setError("");
+            setGuests((prev) => [...prev, {
+                id: "0",
+                name: selectedPerson?.name
+            }] as Guest[]);
         } else {
-            setCode("")
+            setCode("");
             setError("Code does not match.");
             setButtonToggle(false)
         }
@@ -76,25 +81,39 @@ const Rsvp:React.FC<RsvpProps> = () => {
 
     const submit = async () =>{
         try{
-            const selectedId= selectedPerson!.id.toString();
-            const answer = isComingAnswer ? "Yes" : "No";
-            const addGuests = guests.map((item) => item.name);
-    
-            const rsvp: RSVP = {
-                name: selectedPerson!.name,
-                seatNumber: selectedPerson!.seatNumber,
-                numberOfGuests: selectedPerson!.numberOfGuests,
-                guests: addGuests as [],
-                answer: answer
+            if(code === selectedPerson?.code){
+                const selectedId= selectedPerson!.id.toString();
+                const answer = isComingAnswer ? "Yes" : "No";
+                const addGuests = guests.map((item) => item.name);
+        
+                const rsvp: RSVP = {
+                    name: selectedPerson!.name,
+                    seatNumber: selectedPerson!.seatNumber,
+                    numberOfGuests: selectedPerson!.numberOfGuests,
+                    numberOfActualGuests: addGuests.length,
+                    guests: addGuests as [],
+                    answer: answer
+                }
+        
+                await setDoc(doc(firestore, "rsvp", selectedId), rsvp);
+                setRsvpSuccess(true)
+            } else {
+                setCode("");
+                setError("Code does not match.");
             }
-    
-            await setDoc(doc(firestore, "rsvp", selectedId), rsvp);
-            setRsvpSuccess(true)
+            
         } catch (error){
             setRsvpError(true);
             console.log("Error: ", error)
         }
-        
+    }
+
+    const handleRead = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if(e.target.checked){
+            setIsSubmitDisbaled(false);
+        } else {
+            setIsSubmitDisbaled(true);
+        }
     }
 
     useEffect(()=>{
@@ -110,12 +129,21 @@ const Rsvp:React.FC<RsvpProps> = () => {
     }, [selectedPerson]);
 
     useEffect(()=>{
-        if(code.length > 1){
-            setIsCheckDisabled(false);
-        } else {
-            setIsCheckDisabled(true);
-            setButtonToggle(false)
-        }
+        
+            if(code.length > 1){
+                setIsCheckDisabled(false);
+                if(!isComingAnswer){ 
+                    setButtonToggle(true);
+                    setIsSubmitDisbaled(false);
+                }
+            } else {
+                if(isComingAnswer){ 
+                    // setIsCheckDisabled(true);
+                    setButtonToggle(false);
+                } else{
+                    setIsSubmitDisbaled(true);
+                }
+            }
     },[code])
     
     return (
@@ -131,25 +159,22 @@ const Rsvp:React.FC<RsvpProps> = () => {
                             </p>
                             <ComboBox setSelectedPerson={setSelectedPerson} selectedPerson={selectedPerson} people={people} />
                             {selectedPerson && 
-                                <select
-                                    id="location"
-                                    name="location"
-                                    className="mt-4 mb-4 block w-full rounded-md border-0 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    defaultValue="Are you coming?"
-                                    onChange={(event)=>{isComing(event.target.value)}}
-                                    disabled={codeMatch}
-                                >
-                                    <option value="Are you coming?" selected>Are you coming?</option>
-                                    <option value="Yes" >Yes</option>
-                                    <option value="No" >No</option>
-                                </select>
-                            }
-
-                            {isComingAnswer && 
                                 <>
+                                    <select
+                                        id="location"
+                                        name="location"
+                                        className="mt-4 mb-4 block w-full rounded-md border-0 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        defaultValue="Are you coming?"
+                                        onChange={(event)=>{isComing(event.target.value)}}
+                                        disabled={codeMatch}
+                                    >
+                                        <option value="Are you coming?" selected>Are you coming?</option>
+                                        <option value="Yes" >Yes</option>
+                                        <option value="No" >No</option>
+                                    </select>
                                     <div className={`rounded-md mt-2 mb-2 px-3 pb-1.5 pt-2.5 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600 ${false && ' ring-red-300 ring-2 '}`}>
                                         <label htmlFor="name" className="block text-xs font-medium text-gray-900">
-                                        Enter Code
+                                        Code
                                         </label>
                                         <input
                                             onChange={(event) => {setCode(event.target.value)}}
@@ -158,31 +183,30 @@ const Rsvp:React.FC<RsvpProps> = () => {
                                             name="name"
                                             id="name"
                                             className={`block w-full border-0 p-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 disabled:opacity-75`}
-                                            placeholder="Code"
+                                            placeholder="123"
                                             disabled={codeMatch}
                                         />
                                     </div>
-                                    
                                 </>
                             }
                             {/* {codeMatch &&  */}
                             {codeMatch &&
                                 <div>
-                                    <h3 className="text-base font-semibold leading-6 text-gray-900 mt-5">Your table # and the number of guests you can bring.</h3>
+                                    <h3 className="text-base font-semibold leading-6 text-gray-900 mt-5">{`Your table number and seat(s) reserved for you.`}</h3>
                                     <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
                                         <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                                        <dt className="truncate text-sm font-medium text-gray-500 text-center">{`Table #`}</dt>
-                                        <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 text-center">{selectedPerson?.seatNumber}</dd>
+                                            <dt className="truncate text-sm font-medium text-gray-500 text-center">{`Table #`}</dt>
+                                            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 text-center">{selectedPerson?.seatNumber}</dd>
                                         </div>
                                         <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                                        <dt className="truncate text-sm font-medium text-gray-500 text-center">{`Guests`}</dt>
-                                        <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 text-center">{selectedPerson?.numberOfGuests}</dd>
+                                            <dt className="truncate text-sm font-medium text-gray-500 text-center">{`# of Seats`}</dt>
+                                            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 text-center">{selectedPerson?.numberOfGuests}</dd>
                                         </div>
                                     </dl>
-                                    {/* GUESTS */}
+                                    {/* GUESTS ------------------------------------------------------------------- */}
                                     <div>
-                                        <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900 mt-6">
-                                            Add Guests
+                                        <label htmlFor="email" className={`block text-sm font-medium leading-6 text-gray-900 mt-6`}>
+                                            {`Name of guest(s) you're bringing [${guests?.length}/${selectedPerson?.numberOfGuests}]`}
                                         </label>
                                         <div className="mt-2 flex rounded-md shadow-sm">
                                             <div className="relative flex flex-grow items-stretch focus-within:z-10">
@@ -193,10 +217,16 @@ const Rsvp:React.FC<RsvpProps> = () => {
                                                 type="text"
                                                 name="text"
                                                 id="text"
+                                                // aria-invalid="true"
                                                 value={addGuest}
-                                                className="block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                                placeholder="Full Name"
-                                                onChange={(event) => {setAddGuest(event.target.value)}}
+                                                className={`${error ? 'text-red-500 ring-red-300' : 'text-gray-900 ring-gray-300'} ring-1 ring-inset block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                                                placeholder="Guest's Full Name"
+                                                onChange={(event) => {
+                                                    setAddGuest(event.target.value);
+                                                    if(event.target.value.length === 0){
+                                                        setError("");
+                                                    }
+                                                }}
                                             />
                                             </div>
                                             <button
@@ -210,16 +240,31 @@ const Rsvp:React.FC<RsvpProps> = () => {
                                                             }] as Guest[]);
                                                             setAddGuest("");
                                                         } else {
-                                                            setError("Maximun number of guests.")
+                                                            setError("You have reached the maximun number of guests.");
+                                                            setTimeout(() => {
+                                                                setError("");
+                                                            }, 10000)
                                                         }
                                                     }
                                                 }}
                                                 type="button"
-                                                className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                className={`relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold ${error ? 'text-red-500 ring-red-300' : 'text-gray-900 ring-gray-300'} ring-1 ring-inset hover:bg-gray-50`}
                                             >
                                                 Add
                                             </button>
                                         </div>
+                                        {(error && error === "You have reached the maximun number of guests.") &&
+                                            <div className="rounded-md bg-red-50 p-4 mt-2">
+                                                <div className="flex">
+                                                    <div className="flex-shrink-0">
+                                                        <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+                                                    </div>
+                                                    <div className="ml-3">
+                                                        <p className="text-sm font-medium text-red-800">{error}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
                                         { guests && 
                                             <div className="mt-3" >
                                                 <ul role="list" className="divide-y divide-gray-100">
@@ -230,14 +275,23 @@ const Rsvp:React.FC<RsvpProps> = () => {
                                                                 <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
                                                             </div>
                                                         </div>
-                                                        <button
-                                                            onClick={()=>{
-                                                                setGuests((prev) => [...prev.filter(item => item.id !== person.id)]);
-                                                            }}
-                                                            className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                        >
-                                                            <XMarkIcon className="h-4 w-4" aria-hidden="true"/>
-                                                        </button>
+                                                        {person.id !== "0" ?
+                                                            (<button
+                                                                onClick={()=>{
+                                                                    setGuests((prev) => [...prev.filter(item => item.id !== person.id)]);
+                                                                }}
+                                                                className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                            >
+                                                                <XMarkIcon className="h-4 w-4" aria-hidden="true"/>
+                                                            </button>)
+                                                            :
+                                                            (<button
+                                                                className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-default"
+                                                            >
+                                                                You
+                                                            </button>)
+                                                        }
+                                                        
                                                     </li>
                                                     ))}
                                                 </ul>
@@ -247,34 +301,78 @@ const Rsvp:React.FC<RsvpProps> = () => {
                                     <div className="rounded-md bg-yellow-50 p-4 mt-6 mb-2">
                                         <div className="flex">
                                             <div className="flex-shrink-0">
-                                            <ExclamationTriangleIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+                                                <ExclamationTriangleIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
                                             </div>
                                             <div className="ml-3">
-                                            <h3 className="text-sm font-medium text-yellow-800">Attention needed</h3>
-                                            <div className="mt-2 text-sm text-yellow-700">
-                                                <p>
-                                                    Ayaw pataka og dala og guests na more than sa number na naka assign nimo kay limited ra and tanan. Otherwise, maglingkod sila sa salug og kamo magpa kaon. Daghang Salamat!
-                                                </p>
-                                            </div>
+                                                <h3 className="text-md font-medium text-yellow-800">Attention! Please Read!</h3>
+                                                
+                                                <h3 className="text-sm font-medium text-yellow-800 pt-3">Who are seat holders</h3>
+                                                <div className="mt-2 text-sm text-yellow-700">
+                                                    <p>
+                                                        - Adults
+                                                        <br/>
+                                                        - Children who are fully capable of eating on their own.
+                                                    </p>
+                                                </div>
+                                                <h3 className="text-sm font-medium text-yellow-800 pt-3">Venue Restrictions</h3>
+                                                <div className="mt-2 text-sm text-yellow-700">
+                                                    <p>
+                                                    As much as we would love to celebrate with all of our loved ones, our venue can only accomodate a limited number of people. Thus, we have taken a lot of care in choosing our guest list and organizing the seating arrangement. We hope for your kind understanding and we would greatly appreciate it if you adhere to the number of seats reserved for you.
+                                                    </p>
+                                                </div>
+                                                {/* <h3 className="text-sm font-medium text-yellow-800 pt-3">Response</h3>
+                                                <div className="mt-2 text-sm text-yellow-700">
+                                                    <p>
+                                                    Should the number of guests attending be lesser than the number of seats reserved for you, please leave the guest name in the RSVP blank, so that we can accomodate other guests who are in our waiting list. 
+                                                    </p>
+                                                </div> */}
+                                                <h3 className="text-sm font-medium text-yellow-800 pt-3">Thank you very much.</h3>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             }
-                            {error && 
+                            {(error && error != "You have reached the maximun number of guests.") &&
                                 <div className="rounded-md bg-red-50 p-4">
-                                <div className="flex">
-                                <div className="flex-shrink-0">
-                                    <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+                                    <div className="flex">
+                                        <div className="flex-shrink-0">
+                                            <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+                                        </div>
+                                        <div className="ml-3">
+                                            <p className="text-sm font-medium text-red-800">{error}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="ml-3">
-                                    <p className="text-sm font-medium text-red-800">{error}</p>
-                                </div>
-                                </div>
-                            </div>
                             }
                             {buttonToggle ? (
-                                <Button onClick={()=>{submit()}} color="primary" className="disabled:opacity-75" disabled={false}>PLEASE RSVP</Button>
+                                <>
+                                    <fieldset>
+                                        <legend className="sr-only">Notifications</legend>
+                                        <div className="space-y-5">
+                                            <div className="relative flex items-start">
+                                                <div className="flex h-6 items-center">
+                                                    <input
+                                                        id="comments"
+                                                        aria-describedby="I-have-read"
+                                                        name="comments"
+                                                        type="checkbox"
+                                                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                                        onChange={handleRead}
+                                                    />
+                                                </div>
+                                                <div className="ml-3 text-sm leading-6">
+                                                    <label htmlFor="comments" className="font-medium text-gray-900">
+                                                        I have read the 
+                                                    </label>{' '}
+                                                    <span id="comments-description" className="text-gray-500">
+                                                    <span className="sr-only">I have read </span>blah blqh.
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <Button onClick={()=>{submit()}} color="primary" className="disabled:opacity-75" disabled={isSubmitDisbaled}>CONFIRM</Button>
+                                </>
                             ):(
                                 <Button onClick={()=>{checkCode()}} color="primary" className="disabled:opacity-75" disabled={isCheckDisabled}>SUBMIT</Button>
                             )}

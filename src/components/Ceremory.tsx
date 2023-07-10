@@ -1,34 +1,18 @@
-import React, { useState } from 'react';
-import { Dialog } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import React from 'react';
 import Image from 'next/image';
-import { Cookie } from 'next/font/google';
 
-const AB = Cookie({
-    subsets: ['latin'],
-    weight: '400'
-  })
-
-type HeroSectionProps = {
+type CeremonyProps = {
     
 };
 
-const navigation = [
-    { name: 'Product', href: '#' },
-    { name: 'Features', href: '#' },
-    { name: 'Marketplace', href: '#' },
-    { name: 'Company', href: '#' },
-    { name: 'Log in', href: '#' },
-]
-
-const HeroSection:React.FC<HeroSectionProps> = () => {
+const Ceremony:React.FC<CeremonyProps> = () => {
     
     return(
         <div className="bg-gray-900">
             <div className="relative isolate overflow-hidden pt-14">
                 <Image
-                    src="/assets/images/bg-image.jpg"
-                    className="absolute inset-0 -z-10 h-full w-full object-cover opacity-60" 
+                    src="/assets/images/sanantoniodepaduaparish.jpg"
+                    className="absolute inset-0 -z-10 h-full w-full object-cover opacity-30"
                     alt="Picture of the author"
                     width={2000}
                     height={2000}
@@ -45,26 +29,27 @@ const HeroSection:React.FC<HeroSectionProps> = () => {
                     }}
                 />
                 </div>
-                <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+                <div className="mx-auto max-w-4xl py-32 sm:py-48 lg:py-56">
                     <div className="text-center">
                         
-                        <p className="mt-6 text-3xl leading-8 text-gray-300 mb-10">
-                            You are invited!
+                        <p className="mt-6 text-xl leading-8 text-gray-300 mb-10">
+                            CEREMONY
                         </p>
-                        <h1 className={`text-7xl font-bold tracking-tight text-white sm:text-[120px] ${AB.className}`}>
-                            Belle & Steph
+                        <h1 className={`text-5xl font-bold tracking-tight text-white sm:text-[100px]`}>
+                            {`San Antonio de Padua Parish`}
                         </h1>
-                        <p className="mt-11 text-3xl leading-8 text-gray-300">
-                            Are tying the knot!
+                        <p className="mt-11 text-xl leading-2 text-gray-300 p-8">
+                            12th St. Nazareth Cagayan de Oro City
                         </p>
-                        {/* <div className="mt-10 flex items-center justify-center gap-x-6">
-                            <a
-                                href="#"
-                                className="mt-10 rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
-                            >
-                                PLEASE RSVP
-                            </a>
-                        </div> */}
+                        <div className="mt-10 flex items-center justify-center gap-x-6">
+                        <a
+                            target="_blank"
+                            href="https://goo.gl/maps/p3Dpud4Yx3hpUQgy6"
+                            className="mt-10 rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+                        >
+                            GOOGLE MAPS
+                        </a>
+                        </div>
                     </div>
                 </div>
                 <div
@@ -83,4 +68,4 @@ const HeroSection:React.FC<HeroSectionProps> = () => {
         </div>
     )
 }
-export default HeroSection;
+export default Ceremony;
