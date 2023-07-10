@@ -121,6 +121,8 @@ const people = [
     // { id: 120, name: 'John Michael Sison', seatNumber: 1, numberOfGuests: 1, code: "374", status: "" },
     // { id: 121, name: 'Gabe Tampon', seatNumber: 1, numberOfGuests: 1, code: "499", status: "" },
     { id: 122, name: 'Monabelle Joromat', seatNumber: 1, numberOfGuests: 1, code: "436", status: "" },
+    { id: 123, name: 'Maria Irma Pelagio', seatNumber: 1, numberOfGuests: 1, code: "123", status: "" },
+    { id: 124, name: 'Edison Pelagio', seatNumber: 1, numberOfGuests: 1, code: "123", status: "" },
   // More users...
 ];
 

@@ -304,7 +304,7 @@ const Rsvp:React.FC<RsvpProps> = () => {
                                                 <ExclamationTriangleIcon className="h-5 w-5 text-yellow-400" aria-hidden="true" />
                                             </div>
                                             <div className="ml-3">
-                                                <h3 className="text-md font-medium text-yellow-800">Attention! Please Read!</h3>
+                                                <h3 className="text-md font-medium text-yellow-800">Attention: Please read.</h3>
                                                 
                                                 <h3 className="text-sm font-medium text-yellow-800 pt-3">Who are seat holders</h3>
                                                 <div className="mt-2 text-sm text-yellow-700">
@@ -362,10 +362,10 @@ const Rsvp:React.FC<RsvpProps> = () => {
                                                 </div>
                                                 <div className="ml-3 text-sm leading-6">
                                                     <label htmlFor="comments" className="font-medium text-gray-900">
-                                                        I have read the 
+                                                        I have read and I agree to the above statement.
                                                     </label>{' '}
                                                     <span id="comments-description" className="text-gray-500">
-                                                    <span className="sr-only">I have read </span>blah blqh.
+                                                    <span className="sr-only">I have read and I agree to the above statement.</span>
                                                     </span>
                                                 </div>
                                             </div>
