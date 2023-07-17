@@ -26,8 +26,6 @@ interface RSVP {
     answer: "Yes" | "No";
 }
 
-
-
 const Rsvp:React.FC<RsvpProps> = () => {
     
     const [selectedPerson, setSelectedPerson] = useState<People>();
@@ -54,7 +52,7 @@ const Rsvp:React.FC<RsvpProps> = () => {
             setIsCodeMatch(false);
             setIsSubmitDisbaled(true);
             setIsCheckDisabled(true);
-            setButtonToggle(true);
+            setButtonToggle(false);
             setError("");
             setCode("");
             setAddGuest("");
@@ -96,7 +94,7 @@ const Rsvp:React.FC<RsvpProps> = () => {
                 }
         
                 await setDoc(doc(firestore, "rsvp", selectedId), rsvp);
-                setRsvpSuccess(true)
+                setRsvpSuccess(true);
             } else {
                 setCode("");
                 setError("Code does not match.");
@@ -129,29 +127,25 @@ const Rsvp:React.FC<RsvpProps> = () => {
     }, [selectedPerson]);
 
     useEffect(()=>{
-        
-            if(code.length > 1){
-                setIsCheckDisabled(false);
-                if(!isComingAnswer){ 
-                    setButtonToggle(true);
-                    setIsSubmitDisbaled(false);
-                }
-            } else {
-                if(isComingAnswer){ 
-                    // setIsCheckDisabled(true);
-                    setButtonToggle(false);
-                } else{
-                    setIsSubmitDisbaled(true);
-                }
-            }
-    },[code])
+        if(code.length > 1 && isComingAnswer) {
+            setIsCheckDisabled(false);
+            setButtonToggle(false);
+            // setIsSubmitDisbaled(true);
+        } else if(code.length > 1 && !isComingAnswer) {
+            setIsSubmitDisbaled(false);
+            setButtonToggle(true);
+        } else {
+            setIsSubmitDisbaled(true);
+            setIsCheckDisabled(true);
+        }
+    },[code, isComingAnswer])
     
     return (
         <div className="container mx-auto sm:px-6 lg:px-8 flex justify-center h-[auto] py-[50px]">
             <div className="w-full flex justify-center items-center">
                 <div className='w-11/12 md:w-3/12 h-[fit-content]' >
                     {rsvpSuccess ? (
-                        <RsvpSuccessful/>
+                        <RsvpSuccessful answer={isComingAnswer}/>
                     ):(
                         <>
                             <p className="text-center text-1xl leading-8 text-gray-500 mb-5">
@@ -326,7 +320,7 @@ const Rsvp:React.FC<RsvpProps> = () => {
                                                     Should the number of guests attending be lesser than the number of seats reserved for you, please leave the guest name in the RSVP blank, so that we can accomodate other guests who are in our waiting list. 
                                                     </p>
                                                 </div> */}
-                                                <h3 className="text-sm font-medium text-yellow-800 pt-3">Thank you very much.</h3>
+                                                <h3 className="text-sm font-medium text-yellow-800 pt-3">Thank you very much!</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -346,31 +340,35 @@ const Rsvp:React.FC<RsvpProps> = () => {
                             }
                             {buttonToggle ? (
                                 <>
-                                    <fieldset>
-                                        <legend className="sr-only">Notifications</legend>
-                                        <div className="space-y-5">
-                                            <div className="relative flex items-start">
-                                                <div className="flex h-6 items-center">
-                                                    <input
-                                                        id="comments"
-                                                        aria-describedby="I-have-read"
-                                                        name="comments"
-                                                        type="checkbox"
-                                                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                                        onChange={handleRead}
-                                                    />
+                                    {isComingAnswer && 
+                                        (
+                                            <fieldset>
+                                                <legend className="sr-only">Notifications</legend>
+                                                <div className="space-y-5">
+                                                    <div className="relative flex items-start">
+                                                        <div className="flex h-6 items-center">
+                                                            <input
+                                                                id="comments"
+                                                                aria-describedby="I-have-read"
+                                                                name="comments"
+                                                                type="checkbox"
+                                                                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                                                                onChange={handleRead}
+                                                            />
+                                                        </div>
+                                                        <div className="ml-3 text-sm leading-6">
+                                                            <label htmlFor="comments" className="font-medium text-gray-900">
+                                                                I have read and I agree to the above statement.
+                                                            </label>{' '}
+                                                            <span id="comments-description" className="text-gray-500">
+                                                            <span className="sr-only">I have read and I agree to the above statement.</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div className="ml-3 text-sm leading-6">
-                                                    <label htmlFor="comments" className="font-medium text-gray-900">
-                                                        I have read and I agree to the above statement.
-                                                    </label>{' '}
-                                                    <span id="comments-description" className="text-gray-500">
-                                                    <span className="sr-only">I have read and I agree to the above statement.</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
+                                            </fieldset>
+                                        )
+                                    }
                                     <Button onClick={()=>{submit()}} color="primary" className="disabled:opacity-75" disabled={isSubmitDisbaled}>CONFIRM</Button>
                                 </>
                             ):(

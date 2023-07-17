@@ -73,7 +73,7 @@ const people = [
     // { id: 72, name: 'Felipe Apale', seatNumber: 1, numberOfGuests: 1, code: "289", status: "" },
     { id: 73, name: 'Marilou Tero', seatNumber: 1, numberOfGuests: 1, code: "359", status: "" },
     { id: 74, name: 'Antonio Segobia Jr.', seatNumber: 1, numberOfGuests: 1, code: "818", status: "" },
-    { id: 75, name: 'Paul Bryan Pabillaran', seatNumber: 1, numberOfGuests: 1, code: "278", status: "" },
+    { id: 75, name: 'Paul Bryan Pabillaran', seatNumber: 1, numberOfGuests: 3, code: "278", status: "" },
     { id: 76, name: 'Arjo Antatico', seatNumber: 1, numberOfGuests: 1, code: "282", status: "" },
     { id: 77, name: 'Archem Christian Bayer', seatNumber: 1, numberOfGuests: 1, code: "289", status: "" },
     { id: 78, name: 'Zaidel Ann Colipano', seatNumber: 1, numberOfGuests: 1, code: "347", status: "" },
