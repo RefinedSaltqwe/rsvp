@@ -31,7 +31,7 @@ const Rsvp:React.FC<RsvpProps> = () => {
     const [selectedPerson, setSelectedPerson] = useState<People>();
     const [guests, setGuests] = useState<Guest[]>([]);
     const [addGuest, setAddGuest] = useState("");
-    const [isComingAnswer, setIsComingAnswer] = useState(false);
+    const [isComingAnswer, setIsComingAnswer] = useState<boolean | undefined>(undefined);
     const [code, setCode] = useState("");
     const [codeMatch, setIsCodeMatch] = useState(false);
     const [buttonToggle, setButtonToggle] = useState(false);
@@ -49,6 +49,16 @@ const Rsvp:React.FC<RsvpProps> = () => {
             setCode("");
         } else if(answer === "No") {
             setIsComingAnswer(false);
+            setIsCodeMatch(false);
+            setIsSubmitDisbaled(true);
+            setIsCheckDisabled(true);
+            setButtonToggle(false);
+            setError("");
+            setCode("");
+            setAddGuest("");
+            setGuests([]);
+        } else {
+            setIsComingAnswer(undefined);
             setIsCodeMatch(false);
             setIsSubmitDisbaled(true);
             setIsCheckDisabled(true);
@@ -79,11 +89,11 @@ const Rsvp:React.FC<RsvpProps> = () => {
 
     const submit = async () =>{
         try{
-            if(code === selectedPerson?.code){
+            if(code === selectedPerson?.code && isComingAnswer !== undefined){
                 const selectedId= selectedPerson!.id.toString();
                 const answer = isComingAnswer ? "Yes" : "No";
                 const addGuests = guests.map((item) => item.name);
-        
+                
                 const rsvp: RSVP = {
                     name: selectedPerson!.name,
                     seatNumber: selectedPerson!.seatNumber,
@@ -95,9 +105,12 @@ const Rsvp:React.FC<RsvpProps> = () => {
         
                 await setDoc(doc(firestore, "rsvp", selectedId), rsvp);
                 setRsvpSuccess(true);
-            } else {
+            } else if (code !== selectedPerson?.code ){
                 setCode("");
                 setError("Code does not match.");
+            } else if (isComingAnswer === undefined){
+                setCode("");
+                setError("Select option if you are coming");
             }
             
         } catch (error){
@@ -127,11 +140,11 @@ const Rsvp:React.FC<RsvpProps> = () => {
     }, [selectedPerson]);
 
     useEffect(()=>{
-        if(code.length > 1 && isComingAnswer) {
+        if(code.length > 1 && isComingAnswer && isComingAnswer !== undefined) {
             setIsCheckDisabled(false);
             setButtonToggle(false);
             // setIsSubmitDisbaled(true);
-        } else if(code.length > 1 && !isComingAnswer) {
+        } else if(code.length > 1 && !isComingAnswer && isComingAnswer !== undefined) {
             setIsSubmitDisbaled(false);
             setButtonToggle(true);
         } else {
@@ -186,112 +199,114 @@ const Rsvp:React.FC<RsvpProps> = () => {
                             {/* {codeMatch &&  */}
                             {codeMatch &&
                                 <div>
-                                    <h3 className="text-base font-semibold leading-6 text-gray-900 mt-5">{`Your table number and seat(s) reserved for you.`}</h3>
-                                    <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                                    <h3 className="text-base font-semibold leading-6 text-gray-900 mt-5">{`${selectedPerson!.numberOfGuests > 1 ? "Seats" : "Seat"} reserved for you.`}</h3>
+                                    <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-1">
                                         <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                                            <dt className="truncate text-sm font-medium text-gray-500 text-center">{`Table #`}</dt>
-                                            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 text-center">{selectedPerson?.seatNumber}</dd>
+                                            <dt className="truncate text-sm font-medium text-gray-500 text-center">{`# of ${selectedPerson!.numberOfGuests > 1 ? "Seats" : "Seat"} Reserved`}</dt>
+                                            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 text-center">{selectedPerson?.numberOfGuests}</dd>
                                         </div>
                                         <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-                                            <dt className="truncate text-sm font-medium text-gray-500 text-center">{`# of Seats`}</dt>
-                                            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 text-center">{selectedPerson?.numberOfGuests}</dd>
+                                            <dt className="truncate text-sm font-medium text-gray-500 text-center">{`Guest Status`}</dt>
+                                            <dd className="mt-1 text-xl font-semibold tracking-tight text-gray-900 text-center">{selectedPerson?.status === "" ? "General" : selectedPerson?.status}</dd>
                                         </div>
                                     </dl>
                                     {/* GUESTS ------------------------------------------------------------------- */}
-                                    <div>
-                                        <label htmlFor="email" className={`block text-sm font-medium leading-6 text-gray-900 mt-6`}>
-                                            {`Name of guest(s) you're bringing [${guests?.length}/${selectedPerson?.numberOfGuests}]`}
-                                        </label>
-                                        <div className="mt-2 flex rounded-md shadow-sm">
-                                            <div className="relative flex flex-grow items-stretch focus-within:z-10">
-                                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                                <UserPlusIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                            </div>
-                                            <input
-                                                type="text"
-                                                name="text"
-                                                id="text"
-                                                // aria-invalid="true"
-                                                value={addGuest}
-                                                className={`${error ? 'text-red-500 ring-red-300' : 'text-gray-900 ring-gray-300'} ring-1 ring-inset block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-                                                placeholder="Guest's Full Name"
-                                                onChange={(event) => {
-                                                    setAddGuest(event.target.value);
-                                                    if(event.target.value.length === 0){
-                                                        setError("");
-                                                    }
-                                                }}
-                                            />
-                                            </div>
-                                            <button
-                                                onClick={()=> {
-                                                    if(selectedPerson?.numberOfGuests){
-                                                        let guestLen = guests?.length;
-                                                        if(guestLen < selectedPerson?.numberOfGuests){
-                                                            setGuests((prev) => [...prev, {
-                                                                id: guestLen,
-                                                                name: addGuest
-                                                            }] as Guest[]);
-                                                            setAddGuest("");
-                                                        } else {
-                                                            setError("You have reached the maximun number of guests.");
-                                                            setTimeout(() => {
-                                                                setError("");
-                                                            }, 10000)
+                                    {selectedPerson!.numberOfGuests > 1 && 
+                                        <div>
+                                            <label htmlFor="email" className={`block text-sm font-medium leading-6 text-gray-900 mt-6`}>
+                                                {`Name of guest(s) you're bringing [${guests?.length}/${selectedPerson?.numberOfGuests}]`}
+                                            </label>
+                                            <div className="mt-2 flex rounded-md shadow-sm">
+                                                <div className="relative flex flex-grow items-stretch focus-within:z-10">
+                                                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                                    <UserPlusIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                                </div>
+                                                <input
+                                                    type="text"
+                                                    name="text"
+                                                    id="text"
+                                                    // aria-invalid="true"
+                                                    value={addGuest}
+                                                    className={`${error ? 'text-red-500 ring-red-300' : 'text-gray-900 ring-gray-300'} ring-1 ring-inset block w-full rounded-none rounded-l-md border-0 py-1.5 pl-10 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                                                    placeholder="Guest's Full Name"
+                                                    onChange={(event) => {
+                                                        setAddGuest(event.target.value);
+                                                        if(event.target.value.length === 0){
+                                                            setError("");
                                                         }
-                                                    }
-                                                }}
-                                                type="button"
-                                                className={`relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold ${error ? 'text-red-500 ring-red-300' : 'text-gray-900 ring-gray-300'} ring-1 ring-inset hover:bg-gray-50`}
-                                            >
-                                                Add
-                                            </button>
-                                        </div>
-                                        {(error && error === "You have reached the maximun number of guests.") &&
-                                            <div className="rounded-md bg-red-50 p-4 mt-2">
-                                                <div className="flex">
-                                                    <div className="flex-shrink-0">
-                                                        <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
-                                                    </div>
-                                                    <div className="ml-3">
-                                                        <p className="text-sm font-medium text-red-800">{error}</p>
+                                                    }}
+                                                />
+                                                </div>
+                                                <button
+                                                    onClick={()=> {
+                                                        if(selectedPerson?.numberOfGuests){
+                                                            let guestLen = guests?.length;
+                                                            if(guestLen < selectedPerson?.numberOfGuests){
+                                                                setGuests((prev) => [...prev, {
+                                                                    id: guestLen,
+                                                                    name: addGuest
+                                                                }] as Guest[]);
+                                                                setAddGuest("");
+                                                            } else {
+                                                                setError("You have reached the maximun number of guests.");
+                                                                setTimeout(() => {
+                                                                    setError("");
+                                                                }, 10000)
+                                                            }
+                                                        }
+                                                    }}
+                                                    type="button"
+                                                    className={`relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold ${error ? 'text-red-500 ring-red-300' : 'text-gray-900 ring-gray-300'} ring-1 ring-inset hover:bg-gray-50`}
+                                                >
+                                                    Add
+                                                </button>
+                                            </div>
+                                            {(error && error === "You have reached the maximun number of guests.") &&
+                                                <div className="rounded-md bg-red-50 p-4 mt-2">
+                                                    <div className="flex">
+                                                        <div className="flex-shrink-0">
+                                                            <XCircleIcon className="h-5 w-5 text-red-400" aria-hidden="true" />
+                                                        </div>
+                                                        <div className="ml-3">
+                                                            <p className="text-sm font-medium text-red-800">{error}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        }
-                                        { guests && 
-                                            <div className="mt-3" >
-                                                <ul role="list" className="divide-y divide-gray-100">
-                                                    {guests.map((person) => (
-                                                    <li key={person.id} className="flex items-center justify-between gap-x-6 py-5">
-                                                        <div className="flex gap-x-4">
-                                                            <div className="min-w-0 flex-auto">
-                                                                <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
+                                            }
+                                            { guests && 
+                                                <div className="mt-3" >
+                                                    <ul role="list" className="divide-y divide-gray-100">
+                                                        {guests.map((person) => (
+                                                        <li key={person.id} className="flex items-center justify-between gap-x-6 py-5">
+                                                            <div className="flex gap-x-4">
+                                                                <div className="min-w-0 flex-auto">
+                                                                    <p className="text-sm font-semibold leading-6 text-gray-900">{person.name}</p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        {person.id !== "0" ?
-                                                            (<button
-                                                                onClick={()=>{
-                                                                    setGuests((prev) => [...prev.filter(item => item.id !== person.id)]);
-                                                                }}
-                                                                className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                                                            >
-                                                                <XMarkIcon className="h-4 w-4" aria-hidden="true"/>
-                                                            </button>)
-                                                            :
-                                                            (<button
-                                                                className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-default"
-                                                            >
-                                                                You
-                                                            </button>)
-                                                        }
-                                                        
-                                                    </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        }
-                                    </div>
+                                                            {person.id !== "0" ?
+                                                                (<button
+                                                                    onClick={()=>{
+                                                                        setGuests((prev) => [...prev.filter(item => item.id !== person.id)]);
+                                                                    }}
+                                                                    className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                                                >
+                                                                    <XMarkIcon className="h-4 w-4" aria-hidden="true"/>
+                                                                </button>)
+                                                                :
+                                                                (<button
+                                                                    className="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-default"
+                                                                >
+                                                                    You
+                                                                </button>)
+                                                            }
+                                                            
+                                                        </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
                                     <div className="rounded-md bg-yellow-50 p-4 mt-6 mb-2">
                                         <div className="flex">
                                             <div className="flex-shrink-0">

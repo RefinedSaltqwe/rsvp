@@ -27,8 +27,8 @@ const HeroSection:React.FC<HeroSectionProps> = () => {
         <div className="bg-gray-900">
             <div className="relative isolate overflow-hidden pt-14">
                 <Image
-                    src="/assets/images/bg-image.jpg"
-                    className="absolute inset-0 -z-10 h-full w-full object-cover opacity-60" 
+                    src="/assets/images/hero-bg-image.jpg"
+                    className="absolute inset-0 -z-10 h-full w-full object-cover opacity-50" 
                     alt="Picture of the author"
                     width={2000}
                     height={2000}
@@ -52,7 +52,7 @@ const HeroSection:React.FC<HeroSectionProps> = () => {
                             You are invited!
                         </p>
                         <h1 className={`text-7xl font-bold tracking-tight text-white sm:text-[120px] ${AB.className}`}>
-                            Belle & Steph
+                            Stephen & Belle
                         </h1>
                         <p className="mt-11 text-3xl leading-8 text-gray-300">
                             Are tying the knot!

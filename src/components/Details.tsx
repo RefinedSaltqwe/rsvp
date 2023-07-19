@@ -9,13 +9,13 @@ const features = [
     {
       name: 'When',
       description:
-        'August 04, 2023',
+        'Friday, 4th of August 2023',
       icon: CalendarDaysIcon,
     },
     {
       name: 'Time',
       description:
-        "2 o'clock in the afternoon.",
+        "1 o'clock in the afternoon.",
       icon: ClockIcon,
     },
     {
@@ -27,7 +27,7 @@ const features = [
     {
       name: 'Dress code',
       description:
-        'The dress code for our wedding is casual-formal and in shades of blue, except navy/midnight blue. We would highly appreciate it if guests adhere to the dress code. Thank you.',
+        'The dress code for our wedding is formal or smart-casual and in shades of blue and grey. Please do not wear navy/midnight blue and white. We would highly appreciate it if guests adhere to the dress code. Thank you.',
       icon: CheckCircleIcon,
     },
   ]

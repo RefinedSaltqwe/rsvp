@@ -9,6 +9,7 @@ export interface People {
     seatNumber: number;
     numberOfGuests: number;
     code: string;
+    status: string;
 }
 
 type PeopleComboBoxProps = {

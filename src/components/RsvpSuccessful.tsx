@@ -2,7 +2,7 @@ import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 
 type RsvpSuccessfulProps = {
-    answer: boolean;
+    answer: boolean | undefined;
 };
 
 const RsvpSuccessful:React.FC<RsvpSuccessfulProps> = ({ answer }) => {
