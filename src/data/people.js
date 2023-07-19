@@ -143,7 +143,7 @@ const people = [
     { id: 142, name: 'Dr. Butch Lumapas', seatNumber: 1, numberOfGuests: 1, code: "523", status: "" },
     { id: 143, name: 'Pastor Rod Erick Rosales', seatNumber: 1, numberOfGuests: 1, code: "521", status: "" },
     { id: 144, name: 'Bebot Cabiguin', seatNumber: 1, numberOfGuests: 1, code: "346", status: "" },
-    { id: 145, name: 'Frances Margaret Aparte', seatNumber: 1, numberOfGuests: 1, code: "272", status: "" },
+    { id: 145, name: 'Frances Margaret Aparte-Araiz', seatNumber: 1, numberOfGuests: 1, code: "272", status: "" },
     { id: 146, name: 'Eduardo Sanchez', seatNumber: 1, numberOfGuests: 2, code: "453", status: "" },
     // { id: 147, name: 'Elizabeth Sanchez', seatNumber: 1, numberOfGuests: 2, code: "235", status: "" },
     { id: 148, name: 'Flanx Louise Aparte', seatNumber: 1, numberOfGuests: 1, code: "679", status: "Coin Bearer" },
