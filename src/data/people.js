@@ -159,8 +159,8 @@ const people = [
     { id: 158, name: 'Chanie Apale', seatNumber: 1, numberOfGuests: 1, code: "143", status: "Bride's Father" },
     { id: 159, name: 'Stephen Christian Pelagio', seatNumber: 1, numberOfGuests: 1, code: "143", status: "Groom" },
     { id: 160, name: 'Thea Amabelle Apale', seatNumber: 1, numberOfGuests: 1, code: "143", status: "Bride" },
+    { id: 161, name: 'Ellen Ranile', seatNumber: 1, numberOfGuests: 1, code: "613", status: "" },
     //------------------------------------------------------------------------------------------------------------- Di mo attend
-    { id: 161, name: 'Thea Amabelle Apale', seatNumber: 1, numberOfGuests: 1, code: "143", status: "" },
     
   // More people...
 ];
