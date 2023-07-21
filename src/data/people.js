@@ -112,9 +112,9 @@ const people = [
     { id: 111, name: 'Pastor Dan Balayo', seatNumber: 1, numberOfGuests: 2, code: "613", status: "Pastor" },
     // { id: 112, name: 'Jean Balayo', seatNumber: 1, numberOfGuests: 1, code: "734", status: "" },
     // { id: 113, name: 'Atty. Franklin Quijano', seatNumber: 1, numberOfGuests: 1, code: "446", status: "" },
-    { id: 114, name: 'Pastor Roy Campomanes', seatNumber: 1, numberOfGuests: 2, code: "446", status: "Sponsor" },
+    // { id: 114, name: 'Pastor Roy Campomanes', seatNumber: 1, numberOfGuests: 2, code: "446", status: "Sponsor" },
     // { id: 115, name: 'Eva Campomanes', seatNumber: 1, numberOfGuests: 1, code: "956", status: "" },
-    { id: 116, name: 'Dr. Wilson Lumapas', seatNumber: 1, numberOfGuests: 1, code: "679", status: "" },
+    // { id: 116, name: 'Dr. Wilson Lumapas', seatNumber: 1, numberOfGuests: 1, code: "679", status: "" },
     { id: 117, name: 'Franklin Zeigric Quijano', seatNumber: 1, numberOfGuests: 5, code: "853", status: "Groomsman" },
     // { id: 118, name: 'Glendy Ouano', seatNumber: 1, numberOfGuests: 1, code: "734", status: "" },
     // { id: 119, name: 'Jovanne Olalo', seatNumber: 1, numberOfGuests: 1, code: "119", status: "" },
@@ -126,7 +126,7 @@ const people = [
     { id: 125, name: 'Charisse Norina Ma Ranile', seatNumber: 1, numberOfGuests: 1, code: "756", status: "Principal Sponsor" },
     { id: 126, name: 'Raul Pelagio', seatNumber: 1, numberOfGuests: 3, code: "856", status: "Principal Sponsor" },
     { id: 127, name: 'Socorro Aparte', seatNumber: 1, numberOfGuests: 1, code: "143", status: "VIP-Grandma" },
-    { id: 128, name: 'Pastor Roy Campomanes', seatNumber: 1, numberOfGuests: 2, code: "865", status: "Principal Sponsor" },
+    { id: 128, name: 'Pastor Roy Campomanes', seatNumber: 1, numberOfGuests: 2, code: "446", status: "Principal Sponsor" },
     { id: 129, name: 'Hon Mayor Rolando Uy', seatNumber: 1, numberOfGuests: 2, code: "845", status: "VIP" },
     { id: 130, name: 'Pedrita Apale', seatNumber: 1, numberOfGuests: 1, code: "955", status: "Principal Sponsor" },
     { id: 131, name: 'Felipe Apale', seatNumber: 1, numberOfGuests: 1, code: "234", status: "VIP" },
@@ -140,7 +140,7 @@ const people = [
     { id: 139, name: 'Harold Louise Aparte', seatNumber: 1, numberOfGuests: 2, code: "132", status: "" },
     { id: 140, name: 'Jenifer Pelagio', seatNumber: 1, numberOfGuests: 1, code: "342", status: "" },
     { id: 141, name: 'Catherine dela Victoria', seatNumber: 1, numberOfGuests: 4, code: "633", status: "" },
-    { id: 142, name: 'Dr. Butch Lumapas', seatNumber: 1, numberOfGuests: 1, code: "523", status: "" },
+    { id: 142, name: 'Dr. Butch Lumapas', seatNumber: 1, numberOfGuests: 1, code: "679", status: "" },
     { id: 143, name: 'Pastor Rod Erick Rosales', seatNumber: 1, numberOfGuests: 1, code: "521", status: "" },
     { id: 144, name: 'Bebot Cabiguin', seatNumber: 1, numberOfGuests: 1, code: "346", status: "" },
     { id: 145, name: 'Frances Margaret Aparte-Araiz', seatNumber: 1, numberOfGuests: 1, code: "272", status: "" },
@@ -159,6 +159,8 @@ const people = [
     { id: 158, name: 'Chanie Apale', seatNumber: 1, numberOfGuests: 1, code: "143", status: "Bride's Father" },
     { id: 159, name: 'Stephen Christian Pelagio', seatNumber: 1, numberOfGuests: 1, code: "143", status: "Groom" },
     { id: 160, name: 'Thea Amabelle Apale', seatNumber: 1, numberOfGuests: 1, code: "143", status: "Bride" },
+    //------------------------------------------------------------------------------------------------------------- Di mo attend
+    { id: 161, name: 'Thea Amabelle Apale', seatNumber: 1, numberOfGuests: 1, code: "143", status: "" },
     
   // More people...
 ];
