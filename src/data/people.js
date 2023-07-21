@@ -157,12 +157,28 @@ const people = [
     { id: 156, name: 'Joshua Alexander Apale', seatNumber: 1, numberOfGuests: 1, code: "912", status: "Groomsman" },
     { id: 157, name: 'Rowena Apale', seatNumber: 1, numberOfGuests: 1, code: "143", status: "Bride's Mother" },
     { id: 158, name: 'Chanie Apale', seatNumber: 1, numberOfGuests: 1, code: "143", status: "Bride's Father" },
-    { id: 159, name: 'Stephen Christian Pelagio', seatNumber: 1, numberOfGuests: 1, code: "143", status: "Groom" },
+    { id: 159, name: 'Stephen Christian Pelagio', seatNumber: 1, numberOfGuests: 3, code: "143", status: "Groom" },
     { id: 160, name: 'Thea Amabelle Apale', seatNumber: 1, numberOfGuests: 1, code: "143", status: "Bride" },
     { id: 161, name: 'Ellen Ranile', seatNumber: 1, numberOfGuests: 1, code: "613", status: "" },
     //------------------------------------------------------------------------------------------------------------- Di mo attend
+    { id: 162, name: 'Alexander & Larrin Lau', seatNumber: 1, numberOfGuests: 901, code: "111", status: "Principal Sponsors" },
+    { id: 163, name: 'Judelene Teñoso', seatNumber: 1, numberOfGuests: 903, code: "111", status: "Principal Sponsor" },
+    { id: 164, name: 'Dindo Fernandez & Family', seatNumber: 1, numberOfGuests: 902, code: "111", status: "Principal Sponsor" },
+    { id: 165, name: 'Arnold & Rose Roasol & Family', seatNumber: 1, numberOfGuests: 902, code: "111", status: "" },
+    { id: 166, name: 'Elma Fitzpatrick & Family', seatNumber: 1, numberOfGuests: 902, code: "111", status: "Principal Sponsor" },
+    { id: 167, name: 'Eisenhower Bersales & Family', seatNumber: 1, numberOfGuests: 902, code: "111", status: "Principal Sponsor" },
+    { id: 168, name: 'May Clyde Leonor', seatNumber: 1, numberOfGuests: 903, code: "111", status: "" },
+    { id: 169, name: 'Sheryl Valenzuela', seatNumber: 1, numberOfGuests: 903, code: "111", status: "" },
+    { id: 170, name: 'Dwight & Maricor Dans', seatNumber: 1, numberOfGuests: 901, code: "111", status: "" },
+    { id: 171, name: 'Dinah Diana', seatNumber: 1, numberOfGuests: 903, code: "111", status: "" },
+    { id: 172, name: 'Peter & Shiela delos Santos', seatNumber: 1, numberOfGuests: 901, code: "111", status: "" },
+    { id: 173, name: 'Madam Hazel Joy Pacquiao Castro', seatNumber: 1, numberOfGuests: 903, code: "111", status: "VIP-Grandaunt" },
+    { id: 174, name: 'Emelyn Iligan', seatNumber: 1, numberOfGuests: 903, code: "111", status: "Principal Sponsor" },
     
   // More people...
+  // 901 - Seats are reserved for you.
+  // 902 - Seats are reserved for you and your family.
+  // 903 - A seat is reserved for you.
 ];
 
 export default people;

@@ -203,7 +203,15 @@ const Rsvp:React.FC<RsvpProps> = () => {
                                     <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-1">
                                         <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                                             <dt className="truncate text-sm font-medium text-gray-500 text-center">{`# of ${selectedPerson!.numberOfGuests > 1 ? "Seats" : "Seat"} Reserved`}</dt>
-                                            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 text-center">{selectedPerson?.numberOfGuests}</dd>
+                                            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900 text-center">
+                                                {selectedPerson?.numberOfGuests === 901 
+                                                    ? "Seats are reserved for you." 
+                                                    : selectedPerson?.numberOfGuests === 902 
+                                                        ? "Seats are reserved for you and your family." 
+                                                        :  selectedPerson?.numberOfGuests === 903 
+                                                            ? "A seat is reserved for you." 
+                                                            : selectedPerson?.numberOfGuests}
+                                            </dd>
                                         </div>
                                         <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
                                             <dt className="truncate text-sm font-medium text-gray-500 text-center">{`Guest Status`}</dt>
@@ -211,7 +219,7 @@ const Rsvp:React.FC<RsvpProps> = () => {
                                         </div>
                                     </dl>
                                     {/* GUESTS ------------------------------------------------------------------- */}
-                                    {selectedPerson!.numberOfGuests > 1 && 
+                                    {(selectedPerson!.numberOfGuests > 1) && (selectedPerson!.numberOfGuests !== 901) && (selectedPerson!.numberOfGuests !== 902) && (selectedPerson!.numberOfGuests !== 903) && 
                                         <div>
                                             <label htmlFor="email" className={`block text-sm font-medium leading-6 text-gray-900 mt-6`}>
                                                 {`Name of guest(s) you're bringing [${guests?.length}/${selectedPerson?.numberOfGuests}]`}
