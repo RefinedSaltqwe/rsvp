@@ -120,7 +120,7 @@ const people = [
     // { id: 119, name: 'Jovanne Olalo', seatNumber: 1, numberOfGuests: 1, code: "119", status: "" },
     // { id: 120, name: 'John Michael Sison', seatNumber: 1, numberOfGuests: 1, code: "374", status: "" },
     // { id: 121, name: 'Gabe Tampon', seatNumber: 1, numberOfGuests: 1, code: "499", status: "" },
-    { id: 122, name: 'Monabelle Joromat', seatNumber: 1, numberOfGuests: 1, code: "436", status: "" },
+    { id: 122, name: 'Monabelle Joromat', seatNumber: 1, numberOfGuests: 2, code: "436", status: "" },
     { id: 123, name: 'Maria Irma Pelagio', seatNumber: 1, numberOfGuests: 1, code: "123", status: "Groom's Mother" },
     { id: 124, name: 'Edison Pelagio', seatNumber: 1, numberOfGuests: 1, code: "123", status: "Groom's Father" },
     { id: 125, name: 'Charisse Norina Ma Ranile', seatNumber: 1, numberOfGuests: 1, code: "756", status: "Principal Sponsor" },
