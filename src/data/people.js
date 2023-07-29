@@ -174,7 +174,7 @@ const people = [
     { id: 172, name: 'Peter & Shiela delos Santos', seatNumber: 1, numberOfGuests: 901, code: "111", status: "" },
     { id: 173, name: 'Madam Hazel Joy Pacquiao Castro', seatNumber: 1, numberOfGuests: 903, code: "111", status: "VIP-Grandaunt" },
     { id: 174, name: 'Emelyn Iligan', seatNumber: 1, numberOfGuests: 903, code: "111", status: "Principal Sponsor" },
-    { id: 175, name: 'Revy Marata', seatNumber: 1, numberOfGuests: 903, code: "634", status: "" },
+    { id: 175, name: 'Revy Marata', seatNumber: 1, numberOfGuests: 1, code: "634", status: "" },
     
   // More people...
   // 901 - Seats are reserved for you.
