@@ -101,7 +101,7 @@ const people = [
     // { id: 100, name: 'Dr. Christine Gerona', seatNumber: 1, numberOfGuests: 1, code: "058", status: "" },
     // { id: 101, name: 'Justin Gerona', seatNumber: 1, numberOfGuests: 1, code: "967", status: "" },
     // { id: 102, name: 'Dr. Aileen Gerona', seatNumber: 1, numberOfGuests: 1, code: "467", status: "" },
-    { id: 103, name: 'Jopeter Rev Gerona', seatNumber: 1, numberOfGuests: 2, code: "125", status: "Candle Sponsors" },
+    { id: 103, name: 'Jopeter Rev Gerona', seatNumber: 1, numberOfGuests: 3, code: "125", status: "Candle Sponsors" },
     // { id: 104, name: 'Elyza Jade Gerona', seatNumber: 1, numberOfGuests: 1, code: "634", status: "Candle Sponsor" },
     // { id: 105, name: 'Michaela Gerona', seatNumber: 1, numberOfGuests: 1, code: "743", status: "" },
     // { id: 106, name: 'Stella Gerona', seatNumber: 1, numberOfGuests: 1, code: "136", status: "" },
@@ -120,7 +120,7 @@ const people = [
     // { id: 119, name: 'Jovanne Olalo', seatNumber: 1, numberOfGuests: 1, code: "119", status: "" },
     // { id: 120, name: 'John Michael Sison', seatNumber: 1, numberOfGuests: 1, code: "374", status: "" },
     // { id: 121, name: 'Gabe Tampon', seatNumber: 1, numberOfGuests: 1, code: "499", status: "" },
-    { id: 122, name: 'Monabelle Joromat', seatNumber: 1, numberOfGuests: 2, code: "436", status: "" },
+    // { id: 122, name: 'Monabelle Joromat', seatNumber: 1, numberOfGuests: 2, code: "436", status: "" },
     { id: 123, name: 'Maria Irma Pelagio', seatNumber: 1, numberOfGuests: 1, code: "123", status: "Groom's Mother" },
     { id: 124, name: 'Edison Pelagio', seatNumber: 1, numberOfGuests: 1, code: "123", status: "Groom's Father" },
     { id: 125, name: 'Charisse Norina Ma Ranile', seatNumber: 1, numberOfGuests: 1, code: "756", status: "Principal Sponsor" },
@@ -133,7 +133,7 @@ const people = [
     { id: 132, name: 'Camila Diaz', seatNumber: 1, numberOfGuests: 2, code: "933", status: "VIP" },
     // { id: 133, name: 'Jose Llacuna', seatNumber: 1, numberOfGuests: 1, code: "734", status: "VIP" },
     { id: 134, name: 'Julia Aparte', seatNumber: 1, numberOfGuests: 1, code: "065", status: "VIP" },
-    { id: 135, name: 'John Leonard Aparte', seatNumber: 1, numberOfGuests: 2, code: "098", status: "" },
+    { id: 135, name: 'John Leonard Aparte', seatNumber: 1, numberOfGuests: 1, code: "098", status: "" },
     { id: 136, name: 'Ivan Leonard Aparte', seatNumber: 1, numberOfGuests: 1, code: "321", status: "Bible Bearer" },
     { id: 137, name: 'Letecia Sagario', seatNumber: 1, numberOfGuests: 1, code: "432", status: "Honored Attendant" },
     { id: 138, name: 'Cherry Hambre', seatNumber: 1, numberOfGuests: 1, code: "733", status: "" },
@@ -143,7 +143,7 @@ const people = [
     { id: 142, name: 'Dr. Butch Lumapas', seatNumber: 1, numberOfGuests: 2, code: "679", status: "" },
     // { id: 143, name: 'Pastor Rod Erick Rosales', seatNumber: 1, numberOfGuests: 1, code: "521", status: "" },
     { id: 144, name: 'Bebot Cabiguin', seatNumber: 1, numberOfGuests: 1, code: "346", status: "" },
-    { id: 145, name: 'Atty Frances Margaret Aparte-Araiz', seatNumber: 1, numberOfGuests: 1, code: "272", status: "" },
+    { id: 145, name: 'Atty Frances Margaret Aparte-Araiz', seatNumber: 1, numberOfGuests: 2, code: "272", status: "" },
     { id: 146, name: 'Eduardo Sanchez', seatNumber: 1, numberOfGuests: 2, code: "453", status: "" },
     // { id: 147, name: 'Elizabeth Sanchez', seatNumber: 1, numberOfGuests: 2, code: "235", status: "" },
     { id: 148, name: 'Flanx Louise Aparte', seatNumber: 1, numberOfGuests: 1, code: "679", status: "Coin Bearer" },
@@ -174,6 +174,7 @@ const people = [
     { id: 172, name: 'Peter & Shiela delos Santos', seatNumber: 1, numberOfGuests: 901, code: "111", status: "" },
     { id: 173, name: 'Madam Hazel Joy Pacquiao Castro', seatNumber: 1, numberOfGuests: 903, code: "111", status: "VIP-Grandaunt" },
     { id: 174, name: 'Emelyn Iligan', seatNumber: 1, numberOfGuests: 903, code: "111", status: "Principal Sponsor" },
+    { id: 175, name: 'Revy Marata', seatNumber: 1, numberOfGuests: 903, code: "634", status: "" },
     
   // More people...
   // 901 - Seats are reserved for you.
